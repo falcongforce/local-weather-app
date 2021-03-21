@@ -9,7 +9,7 @@ import { ICurrentWeather } from '../interfaces'
 @Injectable({
   providedIn: 'root',
 })
-export class WeatherService {
+export class WeatherService implements IWeatherService {
   constructor(private httpClient: HttpClient) {}
 
   getCurrentWeather(city: string, country: string): Observable<ICurrentWeather> {
@@ -54,4 +54,8 @@ interface ICurrentWeatherData {
   }
   dt: number
   name: string
+}
+
+export interface IWeatherService {
+  getCurrentWeather(city: string, country: string): Observable<ICurrentWeather>
 }
