@@ -15,7 +15,8 @@
     "lint:ts": "tslint --config tslint.json --project . -e \"**/{test,polyfills}.ts\"",
     "lint:ts:fix": "tslint --config tslint.json --fix --project . -e \"**/{test,polyfills}.ts\"",
     "lint:tsc": "tsc --noEmit --skipLibCheck",
-    "init:env": "init-dev-env generate-dot-env example.env -f"
+    "init:env": "init-dev-env generate-dot-env example.env -f",
+    "build:prod": "ng build --prod"
   },
   "private": true,
   "dependencies": {
