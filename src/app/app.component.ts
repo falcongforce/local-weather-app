@@ -13,7 +13,6 @@ import { Component } from '@angular/core'
           Your city, your forecast, right now!
         </div>
       </div>
-
       <div fxLayout="row" fxLayoutAlign="center center">
         <mat-card fxFlex="300px">
           <mat-card-header>
