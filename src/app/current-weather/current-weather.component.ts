@@ -18,7 +18,7 @@ export class CurrentWeatherComponent implements OnInit {
       .getCurrentWeather('Reading, PA', 'US')
       .subscribe((data) => (this.current = data))
   }
-  getOrdinal(date: number) {
+  getOrdinal(date: number): string {
     const n = new Date(date).getDate()
     return n > 0
       ? ['th', 'st', 'nd', 'rd'][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10]
