@@ -54,7 +54,7 @@ describe('CurrentWeatherComponent', () => {
     expect(weatherServiceMock.getCurrentWeather).toHaveBeenCalledTimes(1)
   })
 
-  it('should eagerly load currentWeather in Reading from weatherService', () => {
+  it('should eagerly load currentWeather in Bethesda from weatherService', () => {
     // Arrange
     weatherServiceMock.getCurrentWeather.and.returnValue(of(fakeWeather))
     // Act
