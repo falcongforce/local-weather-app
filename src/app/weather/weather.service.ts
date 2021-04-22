@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 
-import { ICurrentWeather } from '../interfaces'
+import { Coordinates, ICurrentWeather } from '../interfaces'
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +12,17 @@ import { ICurrentWeather } from '../interfaces'
 export class WeatherService implements IWeatherService {
   constructor(private httpClient: HttpClient) {}
 
-  getCurrentWeather(city: string, country: string): Observable<ICurrentWeather> {
-    const uriParams = new HttpParams()
-      .append('q', `${city},${country}`)
-      .append('appid', environment.appId)
+  getCurrentWeather(search: string, country?: string): Observable<ICurrentWeather> {
+    let uriParams = new HttpParams()
+    if (/^\d+$/.test(search)) {
+      uriParams = uriParams.set('zip', search)
+    } else {
+      uriParams = uriParams.set('q', country ? `${search},${country}` : search)
+    }
+    return this.getCurrentWeatherHelper(uriParams)
+  }
+  private getCurrentWeatherHelper(uriParams: HttpParams): Observable<ICurrentWeather> {
+    uriParams = uriParams.set('appid', environment.appId)
     return this.httpClient
       .get<ICurrentWeatherData>(
         `${environment.baseUrl}api.openweathermap.org/data/2.5/weather`,
@@ -23,7 +30,12 @@ export class WeatherService implements IWeatherService {
       )
       .pipe(map((data) => this.transformToICurrentWeather(data)))
   }
-
+  getCurrentWeatherByCoords(coords: Coordinates): Observable<ICurrentWeather> {
+    const uriParams = new HttpParams()
+      .set('lat', coords.latitude.toString())
+      .set('lon', coords.longitude.toString())
+    return this.getCurrentWeatherHelper(uriParams)
+  }
   private transformToICurrentWeather(data: ICurrentWeatherData): ICurrentWeather {
     return {
       city: data.name,
@@ -57,5 +69,6 @@ interface ICurrentWeatherData {
 }
 
 export interface IWeatherService {
-  getCurrentWeather(city: string, country: string): Observable<ICurrentWeather>
+  getCurrentWeather(search: string, country?: string): Observable<ICurrentWeather>
+  getCurrentWeatherByCoords(coords: Coordinates): Observable<ICurrentWeather>
 }
