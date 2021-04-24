@@ -8,6 +8,6 @@ export interface ICurrentWeather {
 }
 
 export interface Coordinates {
-  latitude: string
-  longitude: string
+  latitude: number
+  longitude: number
 }
