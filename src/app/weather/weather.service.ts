@@ -79,7 +79,7 @@ export class WeatherService implements IWeatherService {
   }
 }
 
-interface ICurrentWeatherData {
+export interface ICurrentWeatherData {
   weather: [
     {
       description: string

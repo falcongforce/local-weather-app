@@ -24,14 +24,14 @@ export class CitySearchComponent implements OnInit {
       .subscribe()
   }
 
-  doSearch(searchValue: string) {
+  doSearch(searchValue: string): void {
     const userInput = searchValue.split(',').map((s) => s.trim())
     const searchText = userInput[0]
     const country = userInput.length > 1 ? userInput[1] : undefined
     this.weatherService.updateCurrentWeather(searchText, country)
   }
 
-  getErrorMessage() {
+  getErrorMessage(): string {
     if (this.search.hasError('required')) {
       return 'This field is required'
     } else if (this.search.hasError('minLength')) {
